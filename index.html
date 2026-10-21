@@ -33,26 +33,3 @@
   <textarea id="link" readonly></textarea>
   <button id="copy" type="button">Link kopiëren</button>
   <div class="ok" id="ok"></div>
-</main>
-<script>
-  const link = location.href;
-  const params = new URLSearchParams(location.search);
-  document.getElementById('link').value = link;
-  if(params.get('error')){
-    document.getElementById('title').textContent = 'TikTok gaf geen toestemming';
-    document.getElementById('msg').className = 'bad';
-    document.getElementById('msg').textContent = 'Probeer opnieuw via ClipNova. Melding: ' + (params.get('error_description') || params.get('error'));
-  } else if(!params.get('code')){
-    document.getElementById('title').textContent = 'ClipNova';
-    document.getElementById('msg').textContent = 'Deze pagina is alleen voor het terugkomen na inloggen bij TikTok.';
-    document.getElementById('link').style.display = 'none';
-    document.getElementById('copy').style.display = 'none';
-  }
-  document.getElementById('copy').onclick = async () => {
-    try{ await navigator.clipboard.writeText(link); }
-    catch(e){ const t = document.getElementById('link'); t.select(); document.execCommand('copy'); }
-    document.getElementById('ok').textContent = 'Gekopieerd. Plak hem nu in ClipNova.';
-  };
-</script>
-</body>
-</html>
